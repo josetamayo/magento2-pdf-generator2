@@ -4,6 +4,7 @@ namespace Eadesigndev\Pdfgenerator\Model\Email;
 
 use Magento\Framework\Mail\MailMessageInterface;
 use Zend\Mime\Mime;
+use Zend\Mime\Part;
 use Zend\Mime\PartFactory;
 use Zend\Mail\MessageFactory as MailFactory;
 use Zend\Mime\MessageFactory as MimeFactory;
@@ -152,10 +153,10 @@ class Message extends \Magento\Framework\Mail\Message implements MailMessageInte
 
     private function createHtmlMimeFromString($htmlBody)
     {
-        $htmlPart = $this->partFactory->create([$htmlBody]);
+        $htmlPart = new Part($htmlBody);
         $htmlPart->setCharset($this->zendMessage->getEncoding());
         $htmlPart->setType(Mime::TYPE_HTML);
-        $mimeMessage = $this->mimeMessageFactory->create();
+        $mimeMessage = new \Zend\Mime\Message();
         $mimeMessage->addPart($htmlPart);
         return $mimeMessage;
     }
